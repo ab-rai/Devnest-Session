@@ -1,0 +1,42 @@
+class Solution {
+public:
+    vector<int> buildPattern(string needle)
+    {
+        vector<int> pattern(needle.size(),-1);
+        int right=1,left=0;
+        while(right<needle.size())
+        {
+            if(needle[right]==needle[left])
+            {
+                pattern[right]=left;
+                right++;
+                left++; 
+            }
+            else if(left>0)
+                left=pattern[left-1]+1;
+            else right++;
+        }
+        return pattern;
+    }
+    int strStr(string haystack, string needle) { 
+        if(needle.size()==0)    return 0;
+        vector<int> pattern=buildPattern(needle);
+        int strInd=0,subStrInd=0;
+        while(strInd<haystack.size()) 
+        // or    while( strInd+needle.size()-subStrInd<=haystack.size())
+        {
+            if(haystack[strInd]==needle[subStrInd])
+            {
+                if(subStrInd==needle.size()-1)
+                    return strInd-subStrInd;
+                subStrInd++;
+                strInd++;
+            }
+            else if(subStrInd>0)
+                subStrInd=pattern[subStrInd-1]+1;
+            else strInd++;
+            
+        }
+        return -1;
+    }
+};
