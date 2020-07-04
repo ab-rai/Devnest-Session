@@ -1,0 +1,61 @@
+class myCompMin
+{
+public:
+    bool operator()(pair<int,int> a,pair<int,int> b)
+{
+    if(a.second==b.second)
+        return a.first>b.first;
+    return a.second>b.second;
+}
+};
+
+class myCompMax
+{
+public:
+    bool operator()(pair<int,int> a,pair<int,int> b)
+{
+        
+    if(a.second==b.second)
+        return a.first<b.first;
+    return a.second<b.second;
+}
+};
+
+
+int main() {
+    priority_queue<pair<int,int>,vector<pair<int,int>>,myCompMax> maxHeap;
+    priority_queue<pair<int,int>,vector<pair<int,int>>,myCompMin > minHeap;
+    vector<pair<int,int>> vect{{5,4},{6,12},{7,13},{3,1},{7,103},{3,154},{1,123},{6,13},{65,1},{65,123}};
+    vector<pair<int,int>> asc;
+    vector<pair<int,int>> desc;
+   for(int i=0;i<vect.size();i++)
+    {
+        pair<int,int> currPair=vect[i];
+        maxHeap.push(currPair);
+        minHeap.push(currPair);
+       
+    }
+    while(!maxHeap.empty())
+    {
+        desc.push_back(maxHeap.top());
+        asc.push_back(minHeap.top());
+        maxHeap.pop();
+        minHeap.pop();
+        
+    }
+    cout<<"Ascending order is:-\n";
+    for(pair<int,int> p:asc)
+        cout<<p.first<<","<<p.second<<" || ";
+    cout<<"\nDescending order is:-\n";
+    for(pair<int,int> p:desc)
+        cout<<p.first<<","<<p.second<<" || ";
+    
+}
+
+/* 
+Output:-
+Ascending order is:-
+3,1 || 65,1 || 5,4 || 6,12 || 6,13 || 7,13 || 7,103 || 1,123 || 65,123 || 3,154 || 
+Descending order is:-
+3,154 || 65,123 || 1,123 || 7,103 || 7,13 || 6,13 || 6,12 || 5,4 || 65,1 || 3,1 || 
+*/
